@@ -55,7 +55,11 @@ Session::Session(std::mutex& mtx)
     sp.set_int(sp.urlseed_max_request_bytes, 100 * 1024);
 #endif
 
-    m_session = std::make_unique<lt::session>(sp);
+    /* Use the posix disk I/O backend instead of the default mmap I/O backend */
+    lt::session_params params(sp);
+    params.disk_io_constructor = lt::posix_disk_io_constructor;
+
+    m_session = std::make_unique<lt::session>(params);
 
     m_session_thread = std::thread([&] {
         while (!m_session_thread_quit) {

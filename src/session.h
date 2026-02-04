@@ -29,6 +29,7 @@ along with vlc-bittorrent.  If not, see <http://www.gnu.org/licenses/>.
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #pragma GCC diagnostic ignored "-Wconversion"
 #include <libtorrent/alert.hpp>
+#include <libtorrent/posix_disk_io.hpp>
 #include <libtorrent/session.hpp>
 #pragma GCC diagnostic pop
 
