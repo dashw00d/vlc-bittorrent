@@ -44,7 +44,10 @@ MetadataReadDir(stream_directory_t* p_directory, input_item_node_t* p_node)
 
     std::vector<std::pair<std::string, uint64_t>> files;
     try {
-        files = Download::get_files(md.get(), (size_t) mdsz);
+        auto dl = Download::get_download(md.get(), (size_t) mdsz,
+            get_download_directory((vlc_object_t*) p_directory),
+            get_keep_files((vlc_object_t*) p_directory));
+        files = dl->get_files();
     } catch (std::runtime_error& e) {
         msg_Err(p_directory, "Failed to parse metadata: %s", e.what());
         return VLC_EGENERIC;
